@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "dev.veyra.weave.mixins",
+  "mixins": [
+    "BridgeMovementMixin",
+    "EntityLivingBaseMixin",
+    "EntityPlayerMixin",
+    "EntityPlayerSPMixin",
+    "EntityRendererMixin",
+    "IC03PacketPlayer",
+    "IS14PacketEntity",
+    "IS12PacketEntityVelocity",
+    "MinecraftMixin",
+    "MixinEntityPlayerSP",
+    "NetworkManagerMixin",
+    "RendererLivingEntityMixin",
+    "RenderGlobalMixin",
+    "IMixinMinecraft"
+  ]
+}

@@ -1,0 +1,16 @@
+accessWidener v2 mcp-named
+
+accessible field net/minecraft/client/Minecraft rightClickDelayTimer I
+accessible field net/minecraft/client/Minecraft timer Lnet/minecraft/util/Timer;
+accessible field net/minecraft/client/network/NetHandlerPlayClient netManager Lnet/minecraft/network/NetworkManager;
+accessible field net/minecraft/client/settings/KeyBinding pressed Z
+accessible field net/minecraft/entity/Entity entityId I
+accessible field net/minecraft/entity/Entity inWater Z
+accessible field net/minecraft/entity/EntityLivingBase jumpTicks I
+accessible method net/minecraft/entity/EntityLivingBase getJumpUpwardsMotion ()F
+accessible field net/minecraft/entity/projectile/EntityFishHook ticksCatchable I
+accessible field net/minecraft/entity/player/EntityPlayer speedInAir F
+accessible field net/minecraft/network/NetworkManager channel Lio/netty/channel/Channel;
+accessible field net/minecraft/network/NetworkManager packetListener Lnet/minecraft/network/INetHandler;
+accessible field net/minecraft/network/play/server/S08PacketPlayerPosLook pitch F
+accessible field net/minecraft/network/play/server/S08PacketPlayerPosLook yaw F
