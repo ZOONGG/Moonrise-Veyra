@@ -95,9 +95,3 @@ CI собирает workflow-артефакты; Release и теги публи�
 [проекта Veyra](https://github.com/ZOONGG/Moonrise-Veyra).
 Loader: [Weave-MC / WeaveLoader](https://github.com/Weave-MC/Weave-Loader).
 
-Шрифт Inter: Copyright 2020 The Inter Project Authors; SIL OFL 1.1 сохранена в
-`src/main/resources/assets/veyra/fonts/OFL.txt` и включена в JAR.
-В этом репозитории и архивном Stormy нет заявленной лицензии на код. Указание
-автора не даёт права распространения: владельцу нужно уточнить разрешение/
-лицензию до публичного бинарного релиза. Новая лицензия унаследованному коду
-не назначается.
