@@ -110,7 +110,4 @@ Veyra — развиваемый Weave-мод для Minecraft 1.8.9 на осн
   License 1.1 is retained in `src/main/resources/assets/veyra/fonts/OFL.txt`
   and packaged in the JAR.
 
-Neither this repository nor the archived Stormy tree declares a project code
-license. Attribution does not grant redistribution rights; the owner must
-resolve upstream permission/licensing before publishing a public binary release.
-No new license is assigned to inherited code here.
+
