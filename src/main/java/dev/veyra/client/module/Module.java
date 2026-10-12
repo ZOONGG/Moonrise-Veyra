@@ -27,7 +27,7 @@ public abstract class Module {
    protected int keycode;
    protected int defaultKeycode;
    private BindMode bindMode = BindMode.TOGGLE;
-   private final BindMode defaultBindMode = BindMode.TOGGLE;
+   private final BindMode defaultBindMode;
 
    protected static Minecraft mc = Minecraft.getMinecraft();
    private final BindStateMachine bindState = new BindStateMachine();
@@ -39,6 +39,8 @@ public abstract class Module {
    private String suffix;
 
    public Module(String name, ModuleCategory category, int keybind) {
+      this.defaultBindMode = isBindOnly() ? BindMode.PRESS : BindMode.TOGGLE;
+      this.bindMode = defaultBindMode;
       this.moduleName = name;
       this.moduleCategory = category;
       this.settings = new ArrayList<>();
@@ -124,6 +126,15 @@ public abstract class Module {
       handleBindAction(action);
    }
 
+   /** Timer-sensitive controls use frame polling only, never delayed tick input events. */
+   public void frameKeybind() {
+      if (mc.thePlayer == null || mc.theWorld == null) {
+         handleBindAction(bindState.reset(bindMode));
+      } else {
+         keybind();
+      }
+   }
+
    private void handleBindAction(BindAction action) {
       switch (action) {
          case TOGGLE -> toggle(ModuleTransitionSource.KEYBIND);
@@ -136,7 +147,7 @@ public abstract class Module {
    }
 
    /** Minecraft stores mouse binds as -100 + the LWJGL mouse button. */
-   private static boolean isBindDown(int keycode) {
+   protected static boolean isBindDown(int keycode) {
       if (keycode < 0) {
          int mouseButton = keycode + 100;
          return mouseButton >= 0 && mouseButton < Mouse.getButtonCount()
@@ -162,6 +173,7 @@ public abstract class Module {
    }
 
    public void setToggled(boolean enabled, ModuleTransitionSource source) {
+      if (isBindOnly()) return;
       if (this.enabled == enabled) return;
       boolean shouldNotify = notificationTracker.transition(enabled, source);
       this.enabled = enabled;
@@ -295,6 +307,10 @@ public abstract class Module {
       setBindMode(next);
    }
 
+   public boolean isBindOnly() {
+      return false;
+   }
+
    public boolean supportsHoldBind() {
       return true;
    }
@@ -304,6 +320,7 @@ public abstract class Module {
    }
 
    private boolean isBindModeSupported(BindMode mode) {
+      if (isBindOnly()) return mode == BindMode.PRESS;
       return mode == BindMode.TOGGLE
               || mode == BindMode.HOLD && supportsHoldBind()
               || mode == BindMode.PRESS && supportsPressBind();

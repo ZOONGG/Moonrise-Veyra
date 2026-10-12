@@ -38,6 +38,24 @@ class BindStateMachineTest {
     }
 
     @Test
+    void framePollingTogglesOnceWhileTicksArePausedAndReleasesOnNextFrame() {
+        BindStateMachine state = new BindStateMachine();
+        assertEquals(BindAction.TOGGLE, state.update(BindMode.TOGGLE, true));
+        for (int frame = 0; frame < 120; frame++)
+            assertEquals(BindAction.NONE, state.update(BindMode.TOGGLE, true));
+        assertEquals(BindAction.NONE, state.update(BindMode.TOGGLE, false));
+        assertEquals(BindAction.TOGGLE, state.update(BindMode.TOGGLE, true));
+    }
+
+    @Test
+    void framePollingReleasesHoldWithoutWaitingForGameTick() {
+        BindStateMachine state = new BindStateMachine();
+        assertEquals(BindAction.ENABLE, state.update(BindMode.HOLD, true));
+        assertEquals(BindAction.NONE, state.update(BindMode.HOLD, true));
+        assertEquals(BindAction.DISABLE, state.update(BindMode.HOLD, false));
+    }
+
+    @Test
     void resetReleasesAnActiveHoldBindOnce() {
         BindStateMachine state = new BindStateMachine();
         state.update(BindMode.HOLD, true);

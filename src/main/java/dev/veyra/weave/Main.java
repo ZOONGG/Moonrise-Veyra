@@ -7,6 +7,11 @@ import dev.veyra.client.main.Veyra;
 
 public class Main implements ModInitializer {
     @Override
+    public void preInit(java.lang.instrument.Instrumentation instrumentation) {
+        dev.veyra.weave.mixins.ExperimentalTimerFreezeMixin.installNamedFallback(instrumentation);
+    }
+
+    @Override
     public void init() {
         EventBus.subscribe(StartGameEvent.Post.class, (startGameEvent) -> Veyra.init());
     }

@@ -54,6 +54,7 @@ public final class ModuleDescriptions {
         COPY.put("RightClicker", "Automates secondary clicks with configurable timing.");
         COPY.put("BridgeAssist", "Prevents edge falls and randomly uses safe no-shift passes at the configured chance.");
         COPY.put("Sprint", "Keeps sprint active according to selected conditions.");
+        COPY.put("SpeedMine", "Multiplies block-breaking progress without changing the game timer.");
         COPY.put("Stealer", "Moves selected container items using configurable timing.");
         COPY.put("Strafe", "Adjusts air movement and directional acceleration.");
         COPY.put("Timer", "Changes the local game timer speed while enabled.");

@@ -61,7 +61,7 @@ public class Veyra {
    public void onKeyboard(KeyboardEvent event) {
       if (!PlayerUtils.isPlayerInGame() || moduleManager == null) return;
       for (Module module : moduleManager.getModules()) {
-         module.keybindEvent(event.getKeyCode(), event.getKeyState());
+         if (!usesFrameBind(module)) module.keybindEvent(event.getKeyCode(), event.getKeyState());
       }
    }
 
@@ -72,7 +72,7 @@ public class Veyra {
               || event.getButton() < 0) return;
       int mouseKeyCode = event.getButton() - 100;
       for (Module module : moduleManager.getModules()) {
-         module.keybindEvent(mouseKeyCode, event.getButtonState());
+         if (!usesFrameBind(module)) module.keybindEvent(mouseKeyCode, event.getButtonState());
       }
    }
 
@@ -90,8 +90,24 @@ public class Veyra {
       }
    }
 
+   /** One input source for timer-sensitive controls, independent of game tick speed. */
+   public static void pollFrameBinds() {
+      if (moduleManager == null) return;
+      for (Module module : moduleManager.getModules()) {
+         if (usesFrameBind(module)) module.frameKeybind();
+      }
+   }
+
+   private static boolean usesFrameBind(Module module) {
+      return module instanceof dev.veyra.client.module.modules.movement.Timer
+              || module instanceof dev.veyra.client.module.modules.player.VoidClutch
+              || module instanceof dev.veyra.client.module.modules.client.ClickGuiModule;
+   }
+
    private void pollBinds() {
       if (!PlayerUtils.isPlayerInGame() || moduleManager == null) return;
-      for (Module module : moduleManager.getModules()) module.keybind();
+      for (Module module : moduleManager.getModules()) {
+         if (!usesFrameBind(module)) module.keybind();
+      }
    }
 }

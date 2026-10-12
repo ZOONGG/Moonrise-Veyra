@@ -15,6 +15,8 @@ public abstract class Setting {
       return this.settingName;
    }
 
+   public boolean isVisible() { return true; }
+
    public abstract void resetToDefaults();
    public abstract JsonObject getConfigAsJson();
 

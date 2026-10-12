@@ -453,8 +453,13 @@ public final class ClickGui extends GuiScreen {
         VeyraFonts.regular().drawPlain("Module settings",
                 settingsBackRect.right() + 10, panel.y + 25,
                 UiTokens.Color.TEXT_MUTED, UiTokens.Type.CAPTION);
-        drawToggle(settingsModuleToggleRect, settingsModule.isEnabled(), accent(),
-                settingsModule, settingsModuleToggleRect.contains(mouseX, mouseY));
+        if (settingsModule.isBindOnly()) {
+            VeyraFonts.regular().drawPlain("Bind only", panel.right() - 65, panel.y + 17,
+                    UiTokens.Color.TEXT_MUTED, UiTokens.Type.CAPTION);
+        } else {
+            drawToggle(settingsModuleToggleRect, settingsModule.isEnabled(), accent(),
+                    settingsModule, settingsModuleToggleRect.contains(mouseX, mouseY));
+        }
 
         if (maxScroll > 0) drawScrollbar();
     }
@@ -606,8 +611,13 @@ public final class ClickGui extends GuiScreen {
                 : UiTokens.Color.TEXT_MUTED;
         VeyraFonts.semibold().drawPlain(module.isFavorite() ? "★" : "☆",
                 star.x + 4, star.y + 7, starColor, 11.0F);
-        drawToggle(toggle, module.isEnabled(), moduleColor, module,
-                interactive && toggle.contains(mouseX, mouseY));
+        if (module.isBindOnly()) {
+            VeyraFonts.regular().drawPlain("Bind", toggle.x, toggle.y,
+                    UiTokens.Color.TEXT_MUTED, UiTokens.Type.CAPTION);
+        } else {
+            drawToggle(toggle, module.isEnabled(), moduleColor, module,
+                    interactive && toggle.contains(mouseX, mouseY));
+        }
         VeyraFonts.semibold().drawPlain(">",
                 expandButton.x + 4, expandButton.y + 15,
                 expandButton.contains(mouseX, mouseY) ? moduleColor : UiTokens.Color.TEXT_MUTED,
@@ -640,7 +650,7 @@ public final class ClickGui extends GuiScreen {
         y += 23;
 
         for (Setting setting : module.getSettings()) {
-            if (setting instanceof DescriptionSetting) continue;
+            if (!setting.isVisible() || setting instanceof DescriptionSetting) continue;
             int settingHeight = settingHeight(setting);
             Rect row = new Rect(x, y, innerWidth, settingHeight);
             if (verticallyVisible(row, viewport)) {
@@ -1209,7 +1219,7 @@ public final class ClickGui extends GuiScreen {
     private int expandedHeight(Module module) {
         int height = 30;
         for (Setting setting : module.getSettings()) {
-            if (!(setting instanceof DescriptionSetting)) height += settingHeight(setting);
+            if (setting.isVisible() && !(setting instanceof DescriptionSetting)) height += settingHeight(setting);
         }
         return height;
     }
@@ -1399,6 +1409,7 @@ public final class ClickGui extends GuiScreen {
     }
 
     private static String bindModeLabel(Module module) {
+        if (module.isBindOnly()) return "Bind only";
         return switch (module.getBindMode()) {
             case TOGGLE -> "Toggle";
             case HOLD -> "Hold";

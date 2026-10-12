@@ -16,6 +16,7 @@ weave {
         modId = "veyra"
         entryPoints = listOf("dev.veyra.weave.Main")
         mixinConfigs = listOf("veyra.mixins.json")
+        hooks = listOf("dev.veyra.weave.mixins.ExperimentalTimerFreezeMixin")
         accessWideners = listOf("veyra.accesswidener.txt")
         mcpMappings()
     }
@@ -47,7 +48,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.compileJava {
+tasks.withType<JavaCompile>().configureEach {
     options.release.set(17)
     options.encoding = "UTF-8"
 }

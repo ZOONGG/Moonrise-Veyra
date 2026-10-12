@@ -1,7 +1,6 @@
 package dev.veyra.weave.mixins;
 
 import dev.veyra.client.module.modules.player.SafeWalk;
-import dev.veyra.client.module.modules.movement.Timer;
 import dev.veyra.client.player.bridge.BridgeMovementClamp;
 import dev.veyra.weave.events.LivingUpdateEvent;
 import net.minecraft.client.Minecraft;
@@ -28,11 +27,6 @@ public class EntityLivingBaseMixin {
 
         double requestedX = args.get(0);
         double requestedZ = args.get(2);
-        double timerScale = Timer.localHorizontalMovementScale();
-        if (timerScale != 1.0D) {
-            requestedX *= timerScale;
-            requestedZ *= timerScale;
-        }
 
         if (!self.onGround || !SafeWalk.shouldHardClampMovement()) {
             args.set(0, requestedX);

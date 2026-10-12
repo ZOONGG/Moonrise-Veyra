@@ -16,6 +16,9 @@
     "NetworkManagerMixin",
     "RendererLivingEntityMixin",
     "RenderGlobalMixin",
-    "IMixinMinecraft"
+    "IMixinMinecraft",
+    "ClutchMinecraftAccess",
+    "ClutchMouseInputMixin",
+    "SpeedMineMixin"
   ]
 }
